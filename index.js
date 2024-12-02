@@ -1,5 +1,4 @@
 const express = require("express");
-<<<<<<< HEAD
 const bodyParser = require("body-parser");
 const {MongoClient, ObjectId} = require("mongodb");
 
@@ -34,10 +33,3 @@ MongoClient.connect(MONGO_URL, {useNewUrlParser: true})
         app.listen(8080, () => {console.log("I'm watching you on Port: 8080")})
 
     })
-=======
-const PORT = 8080;
-
-const app = express();
-
-app.listen(8080, () => {console.log("Listening on Port 8080")})
->>>>>>> 921971de31f0313b1261ed104bf51953454277b1
