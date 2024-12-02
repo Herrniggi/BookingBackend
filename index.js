@@ -1,6 +1,35 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const {MongoClient, ObjectId} = require("mongodb");
+
 const PORT = 8080;
 
 const app = express();
+app.use(bodyParser.json());
+const DB_Name = "bookings";
+const bookings_Collection = "bookings"
+const MONGO_URL = ""
 
-app.listen(8080, () => {console.log("Listening on Port 8080")})
+MongoClient.connect(MONGO_URL, {useNewUrlParser: true})
+    .then(client => {
+        console.log("Connection Successful");
+        const db = client.db(DB_Name);
+        const bookingsCollection = db.collection("bookings")
+
+
+        //Neue Buchung
+        app.post("/api/v1/booking", async (req,res)=> {
+            const newBooking = req.body;
+                    await bookings_Collection.insertOne(newBooking);
+                    res.status(201).json(newBooking);
+        })
+
+        app.get("/api/v1/booking", async (req,res) => {
+            const bookings = await bookings_Collection.find().toArray();
+            res.json(bookings);
+        })
+
+
+        app.listen(8080, () => {console.log("I'm watching you on Port: 8080")})
+
+    })
